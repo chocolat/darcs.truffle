@@ -1,0 +1,31 @@
+(trigger
+    (key [[ctrl][shift]Z]))
+
+(name [Add File(s) to Repository])
+
+(input nothing)
+
+(output tooltip)
+
+(save nothing)
+
+(script [cd "$TM_DIRECTORY"
+
+if [[ -z $TM_SELECTED_FILES ]]; then
+	DARCSPaths=`echo \'$TM_FILEPATH\'`;
+else
+	DARCSPaths="$TM_SELECTED_FILES";
+fi
+export DARCSPaths
+
+ruby <<'EOF'
+require 'pathname'
+
+basedir = Pathname.new(ENV['TM_DIRECTORY']).realpath()
+addlist = Array.new()
+ENV['DARCSPaths'].split(/' '/).each() { |addfile|
+  addfile = addfile[/^'?(.*?)'?$/, 1]
+  addlist << "'#{Pathname.new(addfile).realpath.relative_path_from(basedir).to_s.gsub(/(')/, "\\\1")}'"
+}
+output = `darcs add -v -r #{addlist.join(' ')}`
+puts(output)])

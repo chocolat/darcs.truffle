@@ -1,0 +1,15 @@
+(trigger
+    (key [[ctrl][shift]Z]))
+
+(name Diff)
+
+(input nothing)
+
+(output new-document)
+
+(save nothing)
+
+(script [cd "$TM_DIRECTORY"
+echo "Index: changes in working copy of $TM_FILENAME"
+darcs whatsnew -u "$TM_FILENAME"
+])

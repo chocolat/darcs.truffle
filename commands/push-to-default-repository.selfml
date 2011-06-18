@@ -1,0 +1,14 @@
+(trigger
+    (key [[ctrl][shift]Z]))
+
+(name [Push to Default Repository])
+
+(input nothing)
+
+(output tooltip)
+
+(save nothing)
+
+(script [cd "${TM_PROJECT_DIRECTORY:=$TM_DIRECTORY}"
+
+darcs push -a ])

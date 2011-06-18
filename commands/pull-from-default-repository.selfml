@@ -1,0 +1,14 @@
+(trigger
+    (key [[ctrl][shift]Z]))
+
+(name [Pull From Default Repository])
+
+(input nothing)
+
+(output tooltip)
+
+(save project)
+
+(script [cd "${TM_PROJECT_DIRECTORY:=$TM_DIRECTORY}"
+
+darcs pull -a])
